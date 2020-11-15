@@ -34,7 +34,6 @@ const Home = () => {
         const res = await axios.post('/account/authenticate')
         const { data: { username } } = res
         setUser(username)
-        console.log(res)
       } catch (err) {
         console.log(err)
       }
@@ -44,7 +43,6 @@ const Home = () => {
 
   return (
     <div>
-      
       <NavBar user={user} />
       <div className="container mt-3">
         <div className="row">
