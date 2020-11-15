@@ -18,7 +18,7 @@ const NavBar = ({ user }) => {
         user !== ''
           ? (
             <div className="d-flex">
-              <h4 className="mr-3"> {user} </h4>
+              <h4 className="mr-3"> Hi  {user} </h4>
               <button type="button" onClick={handleLogout}>
                 Logout
               </button>
