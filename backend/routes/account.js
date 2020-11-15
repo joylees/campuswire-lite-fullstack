@@ -10,14 +10,26 @@ router.post('/', (req, res) => {
   res.send(`${username} is logged in`)
 })
 
+router.post('/authenticate', isAuthenticated, (req, res) => {
+  const { username } = req.session
+  res.json({ username })
+  // if (req.authenticated) res.send({ status: 'ok' })
+  // else res.send({ status: 'not ok' })
+})
+
 router.post('/signup', async (req, res, next) => {
   const { username, password } = req.body
-
   try {
     await User.create({ username, password })
-    res.send('Account created')
+    req.session.username = username
+    req.session.password = password
+
+    res.send({
+      success: true,
+      data: username,
+    })
   } catch {
-    next('Error occured when signing up')
+    res.send('Failed to sign up')
   }
 })
 
@@ -30,7 +42,10 @@ router.post('/login', (req, res, next) => {
     } else if (user) {
       req.session.username = username
       req.session.password = password
-      res.send('User logged in')
+      res.send({
+        success: true,
+        data: user,
+      })
     } else {
       res.send('Failed to log in')
     }

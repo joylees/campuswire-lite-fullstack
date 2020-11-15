@@ -2,9 +2,11 @@ const isAuthenticated = (req, res, next) => {
   const { username } = req.session
 
   if (username && username !== '') {
+    req.authenticated = true
     next()
   } else {
-    next('Unauthorized user')
+    req.authenticated = false
+    next()
   }
 }
 
